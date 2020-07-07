@@ -12,6 +12,8 @@ import 'package:flutter_samples/scroll_controller/main_scroll_controller.dart';
 import 'package:flutter_samples/size_and_position/main_size_and_position.dart';
 import 'package:flutter_samples/split_image/main_split_image.dart';
 
+import 'cloud_firestore/main_cloud_firestore.dart';
+
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -43,6 +45,14 @@ class MyAppState extends State<MyApp> {
         padding: EdgeInsets.all(15.0),
         child: ListView(
           children: <Widget>[
+            MyMenuButton(
+              title: "Cloud Firestore",
+              actionTap: () {
+                onButtonTap(
+                  MainCloudFirestore(),
+                );
+              },
+            ),
             MyMenuButton(
               title: "Fetch Data JSON",
               actionTap: () {
