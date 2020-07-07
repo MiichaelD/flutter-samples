@@ -8,6 +8,18 @@ class MainCloudFirestore extends StatefulWidget {
 }
 
 class _MainCloudFirestoreState extends State<MainCloudFirestore> {
+  static const String CODELAB_LINK =
+      'https://codelabs.developers.google.com/codelabs/flutter-firebase';
+
+  static const String NO_DATA_OR_ERROR = '''  No data.
+  
+  Please verify the project is configured accordingly.
+    - Android: android/app/google-services.json
+    - iOS: ios/Runner/GoogleService-Info.plist
+    
+  More info in the Cloud Firebase CodeLab: 
+    $CODELAB_LINK''';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,11 +37,20 @@ class _MainCloudFirestoreState extends State<MainCloudFirestore> {
       stream: Firestore.instance.collection('baby').snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();
+        if (snapshot.hasError || snapshot.data.documents.isEmpty)
+          return _buildConfigurationNotice();
         snapshot.data.documents.sort(sortByVotes);
         return _buildList(context, snapshot.data.documents);
       },
     );
   }
+
+  Widget _buildConfigurationNotice() => Container(
+        child: Padding(
+          padding: EdgeInsets.all(24),
+          child: Text(NO_DATA_OR_ERROR),
+        ),
+      );
 
   Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
     return ListView(
