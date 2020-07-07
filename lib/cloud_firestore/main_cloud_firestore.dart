@@ -83,7 +83,7 @@ class _MainCloudFirestoreState extends State<MainCloudFirestore> {
 
 class Record {
   final String name;
-  int votes;
+  final int votes;
   final DocumentReference reference;
 
   Record.fromMap(Map<String, dynamic> map, {this.reference})
@@ -91,7 +91,7 @@ class Record {
         assert(map['votes'] != null),
         name = map['name'],
         votes = map['votes'] {
-    print("Created record: $this");
+    debugPrint("Created record: $this");
   }
 
   Record.fromSnapshot(DocumentSnapshot snapshot)
